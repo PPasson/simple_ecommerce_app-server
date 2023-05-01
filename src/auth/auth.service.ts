@@ -16,7 +16,6 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, pass: string): Promise<any> {
-    console.log('validating user');
     const user = await this.userRepository.findOne({
       where: { username: username },
     });
@@ -28,15 +27,12 @@ export class AuthService {
     //console.log(_match);
     if (_match) {
       const { password, ...result } = user;
-    console.log('result..', result);
-
       return result;
     }
     throw new UnauthorizedException("Password is wrong!");
   }
 
   async login(user: User) {
-    console.log('logging in..', user);
     const LoggedInUser = await this.userRepository.findOne({
       where: { username: user.username },
     });
@@ -45,7 +41,6 @@ export class AuthService {
       id: LoggedInUser.id,
       firstName: LoggedInUser.firstName,
     };
-    console.log('payload', payload);
 
     return {
       access_token: this.jwtService.sign(payload),
