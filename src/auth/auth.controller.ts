@@ -1,34 +1,44 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  UseGuards,
+  Request,
+  Get,
+  SerializeOptions,
+} from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { LoginDTO } from './dto/auth-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { LocalAuthGuard } from './local-auth.guard';
+
 
 @Controller('auth')
+@ApiTags('Auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService, /*(private readonly employeeService: EmployeeService*/) {}
 
-  @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
+  @Post('/login')
+  @UseGuards(LocalAuthGuard)
+  async login(@Body() body: LoginDTO, @Request() req) {
+    return await this.authService.login(req.body);
   }
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
+  @Post('/logout')
+  async logout(@Request() req){
+    return await this.authService.logout(req.body);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
+  @Post('/register')
+  async register(@Body() body: CreateUserDto){
+    return await this.authService.registerUser(body);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
-  }
+  // @UseGuards(JwtAuthGuard)
+  // @ApiBearerAuth()
+  // @Get('/profile')
+  // getProfile(@Request() req) {
+  //   return req.user;
+  // }
 }
