@@ -60,7 +60,8 @@ export class AuthService {
     if(user){
       throw new Error('This username already exists!');
     }
-    const saltRound = process.env.SALT_ROUND;
+    // const saltRound = process.env.SALT_ROUND;
+    const saltRound = 10;
     body.password = await hash(body.password, saltRound);
     return await this.userRepository.save({ ...body });
   }
