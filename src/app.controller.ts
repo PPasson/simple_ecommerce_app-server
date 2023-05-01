@@ -1,5 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Post, Body, BadRequestException } from '@nestjs/common';
+import { AppService, pincodeDto } from './app.service';
 
 @Controller()
 export class AppController {
@@ -9,4 +9,9 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Post('/testValidatePincode')
+  async testValidatePincode( @Body() body: pincodeDto){
+  return this.appService.validatePincode(body);
+}
 }
