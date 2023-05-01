@@ -37,10 +37,13 @@ export class AuthService {
 
   async login(user: User) {
     console.log('logging in..', user);
+    const LoggedInUser = await this.userRepository.findOne({
+      where: { username: user.username },
+    });
     const payload = {
-      username: user.username,
-      id: user.id,
-      firstName: user.firstName,
+      username: LoggedInUser.username,
+      id: LoggedInUser.id,
+      firstName: LoggedInUser.firstName,
     };
     console.log('payload', payload);
 
