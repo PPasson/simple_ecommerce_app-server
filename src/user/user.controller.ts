@@ -15,4 +15,11 @@ export class UserController {
   getProfile(@Request() req) {
     return req.user;
   }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @Get('/orderHistory')
+  async getAllOrderHostory(@Request() req) {
+    return await this.userService.getAllOrderHostory(req.user.id)
+  }
 }
