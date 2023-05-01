@@ -38,6 +38,7 @@ export class OrderService {
   async findOne(id: number) {
     const findOrder = await this.orderRepository.findOne({
       where: { id: id },
+      relations: ['productId'],
     });
     if (!findOrder) throw new BadRequestException("Order not found!");
     return findOrder;
