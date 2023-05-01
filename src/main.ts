@@ -23,7 +23,7 @@ async function bootstrap() {
     methods: "GET,PUT,PATCH,POST,DELETE",
   });
 
-  await app.listen(3000);
+  await app.listen(parseInt(process.env.PORT));
   console.log(`service start on ${await app.getUrl()}`);
 }
 bootstrap();
