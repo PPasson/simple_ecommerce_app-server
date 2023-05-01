@@ -13,8 +13,11 @@ export class User extends BaseEntity {
   id: number;
 
   @Column({ type: "varchar", length: 50, nullable: false })
-  fullName: string;
+  firstName: string;
   
+  @Column({ type: "varchar", length: 50, nullable: false })
+  lastName: string;
+
   @Column({ type: "varchar", length: 50, nullable: true })
   phone: string;
   

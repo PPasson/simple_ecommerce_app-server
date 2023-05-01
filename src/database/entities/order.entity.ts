@@ -19,13 +19,13 @@ export class Order extends BaseEntity {
   @ManyToOne(() => User, user => user.id)
   userId: User|number;
 
-  @Column({ type: "varchar", length: 50, nullable: false })
-  productName: string;
+  @Column({ type: "int", nullable: false })
+  QTY: number;
 
   @Column({ type: "int", nullable: false })
-  price: number;
+  totalPrice: number;
 
   @Column({ type: "varchar", length: 50, nullable: false })
-  productStatus: string;
+  orderStatus: string;
 
 }
